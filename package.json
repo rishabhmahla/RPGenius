@@ -1,0 +1,107 @@
+{
+  "name": "rpgle-ai-assistant",
+  "displayName": "RPGLE AI Assistant",
+  "description": "AI-powered RPGLE code explanation and documentation generator for IBM i developers",
+  "version": "1.0.0",
+  "publisher": "ibmi-dev",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "rpgle",
+    "ibmi",
+    "as400",
+    "ai",
+    "documentation"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "rpgle.explainCode",
+        "title": "Explain RPG Code",
+        "category": "RPGLE AI"
+      },
+      {
+        "command": "rpgle.generateDocs",
+        "title": "Generate RPG Documentation",
+        "category": "RPGLE AI"
+      },
+      {
+        "command": "rpgle.analyzeFullFile",
+        "title": "Analyze Full RPG File",
+        "category": "RPGLE AI"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "rpgle.explainCode",
+          "when": "editorHasSelection",
+          "group": "rpgle@1"
+        },
+        {
+          "command": "rpgle.generateDocs",
+          "when": "editorIsOpen",
+          "group": "rpgle@2"
+        },
+        {
+          "command": "rpgle.analyzeFullFile",
+          "when": "editorIsOpen",
+          "group": "rpgle@3"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "RPGLE AI Assistant",
+      "properties": {
+        "rpgleAI.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "OpenAI API Key for RPGLE AI Assistant",
+          "markdownDescription": "Your OpenAI API key. Get one at [platform.openai.com](https://platform.openai.com)"
+        },
+        "rpgleAI.model": {
+          "type": "string",
+          "default": "gpt-4o",
+          "enum": [
+            "gpt-4o",
+            "gpt-4-turbo",
+            "gpt-3.5-turbo"
+          ],
+          "description": "OpenAI model to use for code analysis"
+        },
+        "rpgleAI.maxTokens": {
+          "type": "number",
+          "default": 2048,
+          "minimum": 256,
+          "maximum": 8192,
+          "description": "Maximum tokens for AI response"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "typescript": "^5.3.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}

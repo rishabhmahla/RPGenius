@@ -66,15 +66,15 @@
           "description": "OpenAI API Key for RPGLE AI Assistant",
           "markdownDescription": "Your OpenAI API key. Get one at [platform.openai.com](https://platform.openai.com)"
         },
+        "rpgleAI.baseUrl": {
+          "type": "string",
+          "default": "https://api.openai.com/v1",
+          "description": "Base URL for an OpenAI-compatible Chat Completions API"
+        },
         "rpgleAI.model": {
           "type": "string",
           "default": "gpt-4o",
-          "enum": [
-            "gpt-4o",
-            "gpt-4-turbo",
-            "gpt-3.5-turbo"
-          ],
-          "description": "OpenAI model to use for code analysis"
+          "description": "Model ID to use for code analysis (provider-specific)"
         },
         "rpgleAI.maxTokens": {
           "type": "number",

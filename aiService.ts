@@ -64,9 +64,14 @@ Always respond with well-structured Markdown analysis.`;
 function getConfig() {
   const config = vscode.workspace.getConfiguration('rpgleAI');
   const apiKey = config.get<string>('apiKey', '');
+  const baseUrl = config.get<string>('baseUrl', 'https://api.openai.com/v1');
   const model = config.get<string>('model', 'gpt-4o');
   const maxTokens = config.get<number>('maxTokens', 2048);
-  return { apiKey, model, maxTokens };
+  return { apiKey, baseUrl, model, maxTokens };
+}
+
+function normalizeBaseUrl(baseUrl: string): string {
+  return baseUrl.trim().replace(/\/+$/, '');
 }
 
 /**
@@ -76,7 +81,8 @@ async function callOpenAI(
   systemPrompt: string,
   userMessage: string
 ): Promise<AIResponse> {
-  const { apiKey, model, maxTokens } = getConfig();
+  const { apiKey, baseUrl, model, maxTokens } = getConfig();
+  const endpoint = `${normalizeBaseUrl(baseUrl)}/chat/completions`;
 
   // Validate API key is set
   if (!apiKey || apiKey.trim() === '') {
@@ -85,8 +91,9 @@ async function callOpenAI(
       'Please add your API key:\n' +
       '1. Open VS Code Settings (Ctrl+,)\n' +
       '2. Search for "RPGLE AI"\n' +
-      '3. Enter your API key in "rpgleAI.apiKey"\n\n' +
-      'Get a key at: https://platform.openai.com'
+      '3. Enter your API key in "rpgleAI.apiKey"\n' +
+      '4. (Optional) Set "rpgleAI.baseUrl" for non-default providers\n\n' +
+      'Get a key at: https://platform.openai.com (or your provider portal)'
     );
   }
 
@@ -97,7 +104,7 @@ async function callOpenAI(
 
   try {
     const response = await axios.post<OpenAIAPIResponse>(
-      'https://api.openai.com/v1/chat/completions',
+      endpoint,
       {
         model,
         messages,

@@ -71,6 +71,7 @@ Add to your VS Code `settings.json`:
 ```json
 {
   "rpgleAI.apiKey": "sk-your-openai-key-here",
+  "rpgleAI.baseUrl": "https://api.openai.com/v1",
   "rpgleAI.model": "gpt-4o",
   "rpgleAI.maxTokens": 2048
 }
@@ -123,7 +124,8 @@ Press `Ctrl+Shift+P` (or `Cmd+Shift+P`) and type:
 | Setting | Default | Description |
 |---|---|---|
 | `rpgleAI.apiKey` | `""` | Your OpenAI API key |
-| `rpgleAI.model` | `"gpt-4o"` | Model to use (`gpt-4o`, `gpt-4-turbo`, `gpt-3.5-turbo`) |
+| `rpgleAI.baseUrl` | `"https://api.openai.com/v1"` | Base URL for an OpenAI-compatible Chat Completions API |
+| `rpgleAI.model` | `"gpt-4o"` | Model ID to use for your selected provider |
 | `rpgleAI.maxTokens` | `2048` | Max tokens in AI response (256–8192) |
 
 ---
